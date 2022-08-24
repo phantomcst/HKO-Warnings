@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@300;400;500;700;900&display=swap');
+body {
+    font-family: 'Noto Sans HK', sans-serif;
+    font-weight: 400;
+    margin: 2rem 0;
+}
+
+#icon {
+    display: grid;
+    gap: 2rem;
+    justify-content: center;
+}
+
+section {
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+}
+.text {
+    padding: 25px 30px;
+    background: rgba(255, 226, 226, 0.7);
+    border-top: solid rgba(255, 26, 26, 1) 3px;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+.text p {
+    margin: 0.5rem 0;
+    font-weight: 400;
+    font-size: 1rem;
+}
+#update-time {
+    text-align: right;
+    font-style: italic;
+    color: gray;
+}
+.icon-img {
+    width: 100px;
+}
+
+#summary {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.5rem;
+    padding-bottom: 6px;
+}
+#refresh {
+    text-align: center;
+    font-size: .8rem;
+    padding-bottom: 20px;
+}
