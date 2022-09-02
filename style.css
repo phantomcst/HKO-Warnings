@@ -2,7 +2,7 @@
 body {
     font-family: 'Noto Sans HK', sans-serif;
     font-weight: 400;
-    margin: 2rem 0;
+    margin: 2rem 1rem;
 }
 
 #icon {
@@ -33,9 +33,19 @@ section {
     font-style: italic;
     color: gray;
 }
-.icon-img {
-    width: 100px;
+@media only screen and (max-width: 480px) {
+    .icon-img {
+        width: 65px;
+        padding-right: 15px;
+    }
 }
+@media only screen and (min-width: 481px) {
+    .icon-img {
+        width: 100px;
+        padding-right: 20px;
+    }
+}
+
 
 #summary {
     text-align: center;

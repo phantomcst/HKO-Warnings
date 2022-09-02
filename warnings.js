@@ -37,8 +37,13 @@ function format_time_hour(hour) {
 async function load() {
     let url = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warningInfo&lang=tc';
     let obj = await (await fetch(url)).json();
-    console.log(obj);
-    document.getElementById("summary").innerHTML = `現時有 ${obj["details"].length} 個生效警告`;
+    //console.log(obj);
+    try {
+        document.getElementById("summary").innerHTML = `現時有 ${obj["details"].length} 個生效警告`;
+    }
+    catch {
+        document.getElementById("summary").innerHTML = `現時沒有生效警告`;
+    }
     let now = new Date();
     document.getElementById("refresh").innerHTML = `頁面更新於${format_time_hour(now.getHours())} 時 ${format_time_min(now.getMinutes())} 分`;
     for (var i = 0; i < obj["details"].length; i++) {
