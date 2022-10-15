@@ -95,18 +95,22 @@ async function swt() {
     let obj = await (await fetch(url)).json();
     //console.log(obj);
 
-    for (var i = 0; i < obj["swt"].length; i++) {
-        const swt_source = obj["swt"][i];
-
-        const tips = document.createElement("li");
-        tips.innerHTML = `${swt_source['desc']}`;
-        document.getElementById("swt-list").appendChild(tips);
-
-        const update = document.createElement("p");
-        const update_time = new Date(swt_source["updateTime"]);
-        update.innerHTML = `${format_time_hour(update_time.getHours())} 時 ${format_time_min(update_time.getMinutes())} 分更新`;
-        tips.appendChild(update);
-        update.classList.add("swt-update-time");
+    if (obj["swt"].length == 0) {
+        document.getElementById("swt-wrap").style.display = "none";
+    } else {
+        for (var i = 0; i < obj["swt"].length; i++) {
+            const swt_source = obj["swt"][i];
+    
+            const tips = document.createElement("li");
+            tips.innerHTML = `${swt_source['desc']}`;
+            document.getElementById("swt-list").appendChild(tips);
+    
+            const update = document.createElement("p");
+            const update_time = new Date(swt_source["updateTime"]);
+            update.innerHTML = `${format_time_hour(update_time.getHours())} 時 ${format_time_min(update_time.getMinutes())} 分更新`;
+            tips.appendChild(update);
+            update.classList.add("swt-update-time");
+        }
     }
 }
 swt();

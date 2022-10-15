@@ -11,8 +11,8 @@ body {
     border-top: solid rgba(255, 192, 0, 1) 3px;
     font-weight: 600;
     font-size: 1.2rem;
-    max-width: 780px;
-    margin: auto auto 3.5rem auto;
+    max-width: 1000px;
+    margin: auto auto 2rem auto;
 }
 #swt-list {
     font-weight: 400;

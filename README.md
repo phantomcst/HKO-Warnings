@@ -1,6 +1,6 @@
 # 香港天文台天氣警告 HKO Warnings
 ### [warnings.html](https://phantomcst.github.io/HKO-Warnings/warnings.html)
-顯示所有現正生效的天氣警告及其報文。
+顯示所有現正生效的天氣警告及其報文，以及特別天氣提示。
 ### [tc.html](https://phantomcst.github.io/HKO-Warnings/tc.html)
 將現正生效的熱帶氣旋警告信號報文分為熱帶氣旋動向、風暴消息及防風措施三部分。
 
