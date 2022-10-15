@@ -6,13 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body style="white-space: pre;">
-    <span style="color: darkred;">熱帶氣旋動向</span>
+<body>
+    <div class="header">熱帶氣旋動向</div>
     <div id="movement"></div>
-    <span style="color: darkred;">最新風暴消息</span>
+    <div class="header">最新風暴消息</div>
     <div id="announcement"></div>
-    <span style="color: darkred;">防風措施</span>
+    <div class="header">防風措施</div>
     <div id="measure"></div>
 </body>
+<style>
+    body {
+        font-family: SF Pro Display;
+        letter-spacing: 2px;
+    }
+    .header {
+        color: darkred;
+        font-weight: bold;
+        margin: 1rem 0 0.5rem 0;
+    }
+    p {
+        line-height: 1.2;
+        margin: 0.3rem 0;
+        font-size: 14px;
+        max-width: 600px;
+    }
+</style>
 <script src="tc.js"></script>
 </html>

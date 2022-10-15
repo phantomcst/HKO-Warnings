@@ -5,42 +5,68 @@ body {
     margin: 2rem 1rem;
 }
 
-#icon {
+#swt-wrap {
+    padding: 25px 30px;
+    background: rgba(248, 248, 174, 0.7);
+    border-top: solid rgba(255, 192, 0, 1) 3px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    max-width: 780px;
+    margin: auto auto 3.5rem auto;
+}
+#swt-list {
+    font-weight: 400;
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    display: grid;
+    gap: 1rem;
+}
+
+.swt-update-time {
+    text-align: right;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: gray;
+    line-height: 0;
+}
+
+#warn-wrap {
     display: grid;
     gap: 2rem;
     justify-content: center;
 }
-
-section {
+.warn {
     max-width: 1000px;
     display: grid;
     grid-template-columns: 1fr 6fr;
 }
-.text {
+.warn-text {
     padding: 25px 30px;
     background: rgba(255, 226, 226, 0.7);
     border-top: solid rgba(255, 26, 26, 1) 3px;
     font-weight: 600;
     font-size: 1.2rem;
 }
-.text p {
+.warn-text p {
     margin: 0.5rem 0;
     font-weight: 400;
     font-size: 1rem;
 }
-#update-time {
+.warn-update-time {
     text-align: right;
     font-style: italic;
+    font-size: 0.85rem !important;
     color: gray;
 }
+
 @media only screen and (max-width: 480px) {
-    .icon-img {
+    .warn-icon-img {
         width: 65px;
         padding-right: 15px;
     }
 }
 @media only screen and (min-width: 481px) {
-    .icon-img {
+    .warn-icon-img {
         width: 100px;
         padding-right: 20px;
     }

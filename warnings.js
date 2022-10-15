@@ -34,8 +34,9 @@ function format_time_hour(hour) {
     else return "上午 " + `${hour}`;
 }
 
-async function load() {
+async function warnings() {
     let url = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warningInfo&lang=tc';
+    //let url = 'test_data.json';
     let obj = await (await fetch(url)).json();
     //console.log(obj);
     try {
@@ -46,42 +47,66 @@ async function load() {
     }
     let now = new Date();
     document.getElementById("refresh").innerHTML = `頁面更新於${format_time_hour(now.getHours())} 時 ${format_time_min(now.getMinutes())} 分`;
+
     for (var i = 0; i < obj["details"].length; i++) {
-        const warn_obj = obj["details"][i];
+        const warn_source = obj["details"][i];
 
         const box = document.createElement("section");
-        box.id = `box-${i}`;
-        document.getElementById("icon").appendChild(box);
+        box.id = `warn-${i}`;
+        box.classList.add("warn");
+        document.getElementById("warn-wrap").appendChild(box);
 
         //Icon image
         const icon = document.createElement("img");
-        if (warn_obj["subtype"]) icon.src = `img/${warn_obj["subtype"]}.png`;
-        else icon.src = `img/${warn_obj["warningStatementCode"]}.png`;
-        document.getElementById(`box-${i}`).appendChild(icon);
-        icon.classList.add("icon-img");
+        if (warn_source["subtype"]) icon.src = `img/${warn_source["subtype"]}.png`;
+        else icon.src = `img/${warn_source["warningStatementCode"]}.png`;
+        document.getElementById(`warn-${i}`).appendChild(icon);
+        icon.classList.add("warn-icon-img");
 
         //Warning name
         const node = document.createElement("div");
-        var warning_name = warning_type(warn_obj["warningStatementCode"]);
-        if (warning_name == -1) warning_name = warning_subtype(warn_obj["subtype"]);
+        var warning_name = warning_type(warn_source["warningStatementCode"]);
+        if (warning_name == -1) warning_name = warning_subtype(warn_source["subtype"]);
         node.innerHTML = warning_name;
-        document.getElementById(`box-${i}`).appendChild(node);
+        document.getElementById(`warn-${i}`).appendChild(node);
         node.id = i;
-        node.classList.add("text");
+        node.classList.add("warn-text");
 
         //Content
-        for (var k = 0; k < warn_obj["contents"].length; k++) {
+        for (var k = 0; k < warn_source["contents"].length; k++) {
             const para = document.createElement("p");
-            para.innerHTML = warn_obj["contents"][k];
+            para.innerHTML = warn_source["contents"][k];
             document.getElementById(i).appendChild(para);
         }
 
         //Update
-        const update_time = new Date(warn_obj["updateTime"]);
+        const update_time = new Date(warn_source["updateTime"]);
         const update = document.createElement("p");
         update.innerHTML = `以上天氣稿由天文台於${format_time_hour(update_time.getHours())} 時 ${format_time_min(update_time.getMinutes())} 分發出`;
         document.getElementById(i).appendChild(update);
-        update.id = "update-time";
+        update.classList.add("warn-update-time");
     }
 }
-load();
+warnings();
+
+async function swt() {
+    let url = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=swt&lang=tc';
+    //let url = 'test_data_swt.json';
+    let obj = await (await fetch(url)).json();
+    //console.log(obj);
+
+    for (var i = 0; i < obj["swt"].length; i++) {
+        const swt_source = obj["swt"][i];
+
+        const tips = document.createElement("li");
+        tips.innerHTML = `${swt_source['desc']}`;
+        document.getElementById("swt-list").appendChild(tips);
+
+        const update = document.createElement("p");
+        const update_time = new Date(swt_source["updateTime"]);
+        update.innerHTML = `${format_time_hour(update_time.getHours())} 時 ${format_time_min(update_time.getMinutes())} 分更新`;
+        tips.appendChild(update);
+        update.classList.add("swt-update-time");
+    }
+}
+swt();
