@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
+    <div id="name"></div>
     <div class="header">熱帶氣旋動向</div>
     <div id="movement"></div>
     <div class="header">最新風暴消息</div>
@@ -16,19 +17,23 @@
 </body>
 <style>
     body {
-        font-family: SF Pro Display;
-        letter-spacing: 2px;
+        font-family: Arial, sans-serif;
+        letter-spacing: 1px;
+        max-width: 800px;
+        margin: 2rem auto;
+        text-align: justify;
     }
     .header {
         color: darkred;
         font-weight: bold;
+        font-size: 1.3rem;
         margin: 1rem 0 0.5rem 0;
     }
     p {
         line-height: 1.2;
         margin: 0.3rem 0;
-        font-size: 14px;
-        max-width: 600px;
+        font-size: 1.1rem;
+        white-space: pre-wrap;
     }
 </style>
 <script src="tc.js"></script>
