@@ -25,13 +25,43 @@ function warning_subtype(subcode) {
     else if (subcode == "TC9") return "九號烈風或暴風風力增強信號";
     else if (subcode == "TC10") return "十號颶風信號";
 }
-function format_time_min(min) {
-    if (min <= 9) return "0" + min;
-    else return min;
-}
-function format_time_hour(hour) {
-    if (hour >= 13) return "下午 " + `${hour-12}`;
-    else return "上午 " + `${hour}`;
+function format_time(timestamp, addDate) {
+    var result = "";
+
+    //day
+    if (addDate) {
+        var diffDays = new Date().getDate() - timestamp.getDate();
+        var diffMonths = new Date().getMonth() - timestamp.getMonth();
+        var diffYears = new Date().getFullYear() - timestamp.getFullYear();
+        if (diffYears == 0 && diffDays == 0 && diffMonths == 0)
+            result += "今天";
+        else if (diffDays == 1)
+            result += "昨天";
+        else if (diffYears != 0)
+            result += ` ${timestamp.getFullYear()} 年 ${timestamp.getMonth()+1} 月 ${timestamp.getDate()} 日`;
+        else
+            result += ` ${timestamp.getMonth()+1} 月 ${timestamp.getDate()} 日`;
+    }
+
+    //hour
+    var hour = timestamp.getHours();
+    if (hour >= 13)
+        result += `下午 ${hour-12} 時 `;
+    else if (hour == 12)
+        result += "中午 12 時 ";
+    else if (hour == 0)
+        result += "上午 12 時 ";
+    else
+        result += `上午 ${hour} 時 `;
+
+    //min
+    var min = timestamp.getMinutes();
+    if (min <= 9)
+        result += `0${min} 分`;
+    else
+        result += `${min} 分`;
+
+    return result;
 }
 
 async function warnings() {
@@ -45,8 +75,8 @@ async function warnings() {
     catch {
         document.getElementById("summary").innerHTML = `現時沒有生效警告`;
     }
-    let now = new Date();
-    document.getElementById("refresh").innerHTML = `頁面更新於${format_time_hour(now.getHours())} 時 ${format_time_min(now.getMinutes())} 分`;
+
+    document.getElementById("refresh").innerHTML = `頁面最後更新：${format_time(new Date(), false)}`;
 
     for (var i = 0; i < obj["details"].length; i++) {
         const warn_source = obj["details"][i];
@@ -58,8 +88,8 @@ async function warnings() {
 
         //Icon image
         const icon = document.createElement("img");
-        if (warn_source["subtype"]) icon.src = `img/${warn_source["subtype"]}.png`;
-        else icon.src = `img/${warn_source["warningStatementCode"]}.png`;
+        if (warn_source["subtype"]) icon.src = `img/${warn_source["subtype"]}.jpeg`;
+        else icon.src = `img/${warn_source["warningStatementCode"]}.jpeg`;
         document.getElementById(`warn-${i}`).appendChild(icon);
         icon.classList.add("warn-icon-img");
 
@@ -80,9 +110,8 @@ async function warnings() {
         }
 
         //Update
-        const update_time = new Date(warn_source["updateTime"]);
         const update = document.createElement("p");
-        update.innerHTML = `以上天氣稿由天文台於${format_time_hour(update_time.getHours())} 時 ${format_time_min(update_time.getMinutes())} 分發出`;
+        update.innerHTML = `以上天氣稿於${format_time(new Date(warn_source["updateTime"]), true)}發出`;
         document.getElementById(i).appendChild(update);
         update.classList.add("warn-update-time");
     }
@@ -106,8 +135,7 @@ async function swt() {
             document.getElementById("swt-list").appendChild(tips);
     
             const update = document.createElement("p");
-            const update_time = new Date(swt_source["updateTime"]);
-            update.innerHTML = `${format_time_hour(update_time.getHours())} 時 ${format_time_min(update_time.getMinutes())} 分更新`;
+            update.innerHTML = `${format_time(new Date(swt_source["updateTime"]), true)}更新`;
             tips.appendChild(update);
             update.classList.add("swt-update-time");
         }

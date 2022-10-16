@@ -50,6 +50,7 @@ body {
     font-style: italic;
     font-size: 0.85rem !important;
     color: gray;
+    margin: 8px 0;
 }
 
 @media only screen and (max-width: 480px) {
@@ -90,6 +91,6 @@ body.dark {
     background: rgba(120, 86, 86, 0.7);
     border-top: solid rgb(158, 22, 22) 3px;
 }
-.dark .swt-update-time, .warn-update-time {
+.dark .swt-update-time, .dark .warn-update-time {
     color: lightgray;
 }
