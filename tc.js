@@ -24,19 +24,29 @@ function find(whole, to_find) {
 
 async function load() {
     let url = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warningInfo&lang=tc';
+    //let url = 'test_data/test_data_tc.json';
     let data = await (await fetch(url)).json();
     data = data["details"];
 
     var index = data.findIndex(obj => obj.warningStatementCode == "WTCSGNL");
     if (index != -1) {
         const text = data[index]["contents"];
-        const movement_index = find(text, ["集結在", "即在北緯", "東經", "預料向"]);
-        const measure_index = text.indexOf(`${tc_warning_name(data[index]["subtype"])}－防風措施報告：`);
+        
+        var movement_index = find(text, ["集結在", "即在北緯", "東經", "預料向"]);
+        if (movement_index != -1 && text[movement_index-1].includes("已增強為")) movement_index--;
+        
+        var announcement_index;
+        if (movement_index == -1) {
+            announcement_index = -1;
+        } else if (text[movement_index].includes("已增強為")) {
+            if (movement_index + 1 == text.length) announcement_index = -1;
+            else announcement_index = movement_index + 2;
+        } else {
+            if (movement_index == text.length) announcement_index = -1;
+            else announcement_index = movement_index + 1;
+        }
 
-        /*const text = [
-            "一號戒備信號在下午9時20分發出。\n\n表示有一熱帶氣旋，在香港約800公里內，可能影響本港。\n\n請在計劃活動時考慮天氣的轉變，並注意離岸海域可能有強風。"
-        ];
-        const measure_index = text.indexOf(`三號強風信號－防風措施報告：`);*/
+        var measure_index = text.indexOf(`${tc_warning_name(data[index]["subtype"])}－防風措施報告：`);
 
         //Name
         const name_div = document.getElementById("name");
@@ -57,24 +67,28 @@ async function load() {
         //Movement
         if (movement_index != -1) {
             const movement_div = document.getElementById("movement");
-            for (var i = movement_index; i <= movement_index; i++) {
+            for (var i = movement_index; i < announcement_index; i++) {
                 var tag = document.createElement("p");
                 tag.appendChild(document.createTextNode(text[i]));
                 movement_div.appendChild(tag);
             }
         }
 
-        if (measure_index != -1) {
-            //Case 3
-            //Announcement
+        //Announcement
+        if (announcement_index != -1) {
             const announcement_div = document.getElementById("announcement");
-            for (var i = movement_index + 1; i <= measure_index - 1; i++) {
+            var stop;
+            if (measure_index == -1) stop = text.length;
+            else stop = measure_index;
+            for (var i = announcement_index; i < stop; i++) {
                 var tag = document.createElement("p");
                 tag.appendChild(document.createTextNode(text[i]));
                 announcement_div.appendChild(tag);
             }
+        }
 
-            //Measure
+        //Measure
+        if (measure_index != -1) {
             const measure_div = document.getElementById("measure");
             for (var i = measure_index; i < text.length; i++) {
                 var tag = document.createElement("p");
@@ -89,3 +103,18 @@ load();
 //Case 1: Issue
 //Case 2: Short (Movement only)
 //Case 3: Long (Movement + Announcemenet + Measure)
+
+
+//Dark Mode
+//initial
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.body.classList.add("dark");
+}
+//watch for changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+    if (event.matches) {
+        document.body.classList.add("dark");
+    } else {
+        document.body.classList.remove("dark");
+    }
+});

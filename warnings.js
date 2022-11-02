@@ -24,6 +24,7 @@ function warning_subtype(subcode) {
     else if (subcode == "TC8NW") return "八號西北烈風或暴風信號";
     else if (subcode == "TC9") return "九號烈風或暴風風力增強信號";
     else if (subcode == "TC10") return "十號颶風信號";
+    else if (subcode == "CANCEL") return "所有熱帶氣旋警告信號取消";
 }
 function format_time(timestamp, addDate) {
     var result = "";
@@ -38,9 +39,9 @@ function format_time(timestamp, addDate) {
         else if (diffDays == 1)
             result += "昨天";
         else if (diffYears != 0)
-            result += ` ${timestamp.getFullYear()} 年 ${timestamp.getMonth()+1} 月 ${timestamp.getDate()} 日`;
+            result += `${timestamp.getFullYear()} 年 ${timestamp.getMonth()+1} 月 ${timestamp.getDate()} 日`;
         else
-            result += ` ${timestamp.getMonth()+1} 月 ${timestamp.getDate()} 日`;
+            result += `${timestamp.getMonth()+1} 月 ${timestamp.getDate()} 日`;
     }
 
     //hour
@@ -63,19 +64,37 @@ function format_time(timestamp, addDate) {
 
     return result;
 }
+function warning_valid(obj) {
+    if (obj["warningStatementCode"] == "WTCPRE8") return false;
+    else if (obj["warningStatementCode"] == "WTCSGNL" && obj["subtype"] == "CANCEL") return false;
+    else return true;
+}
+function count_warnings(obj) {
+    var count = 0;
+    for (i = 0; i < obj.length; i++) {
+        var flag = false;
+        if (obj[i]["warningStatementCode"] == "WTCPRE8") flag = true;
+        else if (obj[i]["warningStatementCode"] == "WTCSGNL" && obj[i]["subtype"] == "CANCEL") flag = true;
+
+        if (!flag) count++;
+    }
+    return count;
+}
 
 async function warnings() {
     let url = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warningInfo&lang=tc';
-    //let url = 'test_data.json';
+    //let url = 'test_data/test_data_tc.json';
     let obj = await (await fetch(url)).json();
     //console.log(obj);
-    try {
-        document.getElementById("summary").innerHTML = `現時有 ${obj["details"].length} 個生效警告`;
-    }
-    catch {
-        document.getElementById("summary").innerHTML = `現時沒有生效警告`;
-    }
 
+    //Warning count
+    var count = 0;
+    for (i = 0; i < obj["details"].length; i++) {
+        if (warning_valid(obj["details"][i])) count++;
+    }
+    if (count == 0) document.getElementById("summary").innerHTML = `現時沒有生效警告`;
+    else document.getElementById("summary").innerHTML = `現時有 ${count} 個生效警告`;
+   
     document.getElementById("refresh").innerHTML = `頁面最後更新：${format_time(new Date(), false)}`;
 
     for (var i = 0; i < obj["details"].length; i++) {
@@ -88,56 +107,82 @@ async function warnings() {
 
         //Icon image
         const icon = document.createElement("img");
-        if (warn_source["subtype"]) icon.src = `img/${warn_source["subtype"]}.jpeg`;
-        else icon.src = `img/${warn_source["warningStatementCode"]}.jpeg`;
+        if (warning_valid(warn_source)) {
+            if (warn_source["subtype"]) icon.src = `img/${warn_source["subtype"]}.jpeg`;
+            else icon.src = `img/${warn_source["warningStatementCode"]}.jpeg`;
+        }
         document.getElementById(`warn-${i}`).appendChild(icon);
         icon.classList.add("warn-icon-img");
 
-        //Warning name
+        //Warning text box
         const node = document.createElement("div");
-        var warning_name = warning_type(warn_source["warningStatementCode"]);
-        if (warning_name == -1) warning_name = warning_subtype(warn_source["subtype"]);
-        node.innerHTML = warning_name;
         document.getElementById(`warn-${i}`).appendChild(node);
         node.id = i;
         node.classList.add("warn-text");
 
-        //Content
-        for (var k = 0; k < warn_source["contents"].length; k++) {
-            const para = document.createElement("p");
-            para.innerHTML = warn_source["contents"][k];
-            document.getElementById(i).appendChild(para);
-        }
+        //Warning name
+        const warn_name = document.createElement("span");
+        var warning_name = warning_type(warn_source["warningStatementCode"]);
+        if (warning_name == -1) warning_name = warning_subtype(warn_source["subtype"]);
+        warn_name.innerHTML = warning_name;
+        warn_name.classList.add("block-title");
+        node.appendChild(warn_name);
 
         //Update
         const update = document.createElement("p");
-        update.innerHTML = `以上天氣稿於${format_time(new Date(warn_source["updateTime"]), true)}發出`;
+        update.innerHTML = `${format_time(new Date(warn_source["updateTime"]), true)}更新`;
         document.getElementById(i).appendChild(update);
         update.classList.add("warn-update-time");
+
+        //Content
+        const warn_content_wrap = document.createElement("div");
+        warn_content_wrap.classList.add("warn-content-wrap");
+        node.appendChild(warn_content_wrap);
+        var collapsable_title = false;
+        const collapsable = document.createElement("details");
+        for (var k = 0; k < warn_source["contents"].length; k++) {
+            if (warn_source["contents"][k].includes("－防風措施報告：") && !collapsable_title) {
+                collapsable_title = true;
+                const summary = document.createElement("summary");
+                summary.innerHTML = warn_source["contents"][k];
+                collapsable.appendChild(summary);
+                warn_content_wrap.appendChild(collapsable);
+            } else if (collapsable_title) {
+                const para = document.createElement("p");
+                para.innerHTML = warn_source["contents"][k];
+                collapsable.appendChild(para);
+            } else {
+                const para = document.createElement("p");
+                para.innerHTML = warn_source["contents"][k];
+                warn_content_wrap.appendChild(para);
+            }
+        }
     }
 }
 warnings();
 
 async function swt() {
     let url = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=swt&lang=tc';
-    //let url = 'test_data_swt.json';
+    //let url = 'test_data/test_data_swt.json';
     let obj = await (await fetch(url)).json();
     //console.log(obj);
 
-    if (obj["swt"].length == 0) {
-        document.getElementById("swt-wrap").style.display = "none";
-    } else {
+    if (obj["swt"].length != 0) {
+        document.getElementById("swt-wrap").style.display = "block";
         for (var i = 0; i < obj["swt"].length; i++) {
             const swt_source = obj["swt"][i];
     
-            const tips = document.createElement("li");
-            tips.innerHTML = `${swt_source['desc']}`;
-            document.getElementById("swt-list").appendChild(tips);
-    
+            const tips_wrap = document.createElement("p");
+            document.getElementById("swt-list").appendChild(tips_wrap);
+
             const update = document.createElement("p");
             update.innerHTML = `${format_time(new Date(swt_source["updateTime"]), true)}更新`;
-            tips.appendChild(update);
+            tips_wrap.appendChild(update);
             update.classList.add("swt-update-time");
+
+            const tips_text = document.createElement("li");
+            tips_text.innerHTML = `${swt_source['desc']}`;
+            tips_wrap.appendChild(tips_text);
         }
     }
 }
