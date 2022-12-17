@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九天天氣預報</title>
+</head>
+<body>
+    <div class="box generalSituation">
+        <div class="boxTitle" id="generalSituationTitle">天氣展望</div>
+        <div id="generalSituation"></div>
+    </div>
+    <div class="box weatherForecast">
+        <div class="boxTitle">九天天氣預報</div>
+        <div id="weatherForecastSummary"></div>
+        <div class="boxContentWrap">
+            <div class="weatherForecastDay">
+                <div class="weatherForecastDate" id="wx1-date">-</div>
+                <div class="weatherForecastIcon"><i id="wx1-icon" class="fa-solid fa-minus fa-lg"></i></div>
+                <div class="weatherForecastTemperatureBar">
+                    <div class="barTemp barTempMin" id="wx1-tempMin">-°</div>
+                    <div class="bar" id="wx1-tempBar"></div>
+                    <div class="barTemp barTempMax" id="wx1-tempMax">-°</div>
+                </div>
+                <div></div>
+                <label class="weatherForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx1-psrIcon"></i> <span id="wx1-psr">-</span></label>
+            </div>
+            <div class="weatherForecastDay">
+                <div class="weatherForecastDate" id="wx2-date">-</div>
+                <div class="weatherForecastIcon"><i id="wx2-icon" class="fa-solid fa-minus fa-lg"></i></div>
+                <div class="weatherForecastTemperatureBar">
+                    <div class="barTemp barTempMin" id="wx2-tempMin">-°</div>
+                    <div class="bar" id="wx2-tempBar"></div>
+                    <div class="barTemp barTempMax" id="wx2-tempMax">-°</div>
+                </div>
+                <div></div>
+                <label class="weatherForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx2-psrIcon"></i> <span id="wx2-psr">-</span></label>
+            </div>
+            <div class="weatherForecastDay">
+                <div class="weatherForecastDate" id="wx3-date">-</div>
+                <div class="weatherForecastIcon"><i id="wx3-icon" class="fa-solid fa-minus fa-lg"></i></div>
+                <div class="weatherForecastTemperatureBar">
+                    <div class="barTemp barTempMin" id="wx3-tempMin">-°</div>
+                    <div class="bar" id="wx3-tempBar"></div>
+                    <div class="barTemp barTempMax" id="wx3-tempMax">-°</div>
+                </div>
+                <div></div>
+                <label class="weatherForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx3-psrIcon"></i> <span id="wx3-psr">-</span></label>
+            </div>
+            <div class="weatherForecastDay">
+                <div class="weatherForecastDate" id="wx4-date">-</div>
+                <div class="weatherForecastIcon"><i id="wx4-icon" class="fa-solid fa-minus fa-lg"></i></div>
+                <div class="weatherForecastTemperatureBar">
+                    <div class="barTemp barTempMin" id="wx4-tempMin">-°</div>
+                    <div class="bar" id="wx4-tempBar"></div>
+                    <div class="barTemp barTempMax" id="wx4-tempMax">-°</div>
+                </div>
+                <div></div>
+                <label class="weatherForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx4-psrIcon"></i> <span id="wx4-psr">-</span></label>
+            </div>
+            <div class="weatherForecastDay">
+                <div class="weatherForecastDate" id="wx5-date">-</div>
+                <div class="weatherForecastIcon"><i id="wx5-icon" class="fa-solid fa-minus fa-lg"></i></div>
+                <div class="weatherForecastTemperatureBar">
+                    <div class="barTemp barTempMin" id="wx5-tempMin">-°</div>
+                    <div class="bar" id="wx5-tempBar"></div>
+                    <div class="barTemp barTempMax" id="wx5-tempMax">-°</div>
+                </div>
+                <div></div>
+                <label class="weatherForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx5-psrIcon"></i> <span id="wx5-psr">-</span></label>
+            </div>
+            <div class="weatherForecastDay">
+                <div class="weatherForecastDate" id="wx6-date">-</div>
+                <div class="weatherForecastIcon"><i id="wx6-icon" class="fa-solid fa-minus fa-lg"></i></div>
+                <div class="weatherForecastTemperatureBar">
+                    <div class="barTemp barTempMin" id="wx6-tempMin">-°</div>
+                    <div class="bar" id="wx6-tempBar"></div>
+                    <div class="barTemp barTempMax" id="wx6-tempMax">-°</div>
+                </div>
+                <div></div>
+                <label class="weatherForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx6-psrIcon"></i> <span id="wx6-psr">-</span></label>
+            </div>
+            <div class="weatherForecastDay">
+                <div class="weatherForecastDate" id="wx7-date">-</div>
+                <div class="weatherForecastIcon"><i id="wx7-icon" class="fa-solid fa-minus fa-lg"></i></div>
+                <div class="weatherForecastTemperatureBar">
+                    <div class="barTemp barTempMin" id="wx7-tempMin">-°</div>
+                    <div class="bar" id="wx7-tempBar"></div>
+                    <div class="barTemp barTempMax" id="wx7-tempMax">-°</div>
+                </div>
+                <div></div>
+                <label class="weatherForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx7-psrIcon"></i> <span id="wx7-psr">-</span></label>
+            </div>
+            <div class="weatherForecastDay">
+                <div class="weatherForecastDate" id="wx8-date">-</div>
+                <div class="weatherForecastIcon"><i id="wx8-icon" class="fa-solid fa-minus fa-lg"></i></div>
+                <div class="weatherForecastTemperatureBar">
+                    <div class="barTemp barTempMin" id="wx8-tempMin">-°</div>
+                    <div class="bar" id="wx8-tempBar"></div>
+                    <div class="barTemp barTempMax" id="wx8-tempMax">-°</div>
+                </div>
+                <div></div>
+                <label class="weatherForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx8-psrIcon"></i> <span id="wx8-psr">-</span></label>
+            </div>
+            <div class="weatherForecastDay">
+                <div class="weatherForecastDate" id="wx9-date">-</div>
+                <div class="weatherForecastIcon"><i id="wx9-icon" class="fa-solid fa-minus fa-lg"></i></div>
+                <div class="weatherForecastTemperatureBar">
+                    <div class="barTemp barTempMin" id="wx9-tempMin">-°</div>
+                    <div class="bar" id="wx9-tempBar"></div>
+                    <div class="barTemp barTempMax" id="wx9-tempMax">-°</div>
+                </div>
+                <div></div>
+                <label class="weatherForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx9-psrIcon"></i> <span id="wx9-psr">-</span></label>
+            </div>
+        </div>
+    </div>
+
+    <input class="modal-state" id="modal-1" type="checkbox" />
+    <div class="modal">
+        <label class="modal__bg" for="modal-1"></label>
+        <div class="modal__inner">
+          <label class="modal__close" for="modal-1"></label>
+          <h2>關於「顯著降雨概率」</h2>
+          <p>「顯著降雨概率」預報為用户提供雨量及未來九天降雨趨勢方面的額外參考。每日的顯著降雨概率預報表示當日香港廣泛地區累積雨量達到10毫米（即約雨季期間的日降雨量平均值）或以上的機會率。概率分5個等級：</p>
+          <table style="width:100%">
+            <tr>
+                <td><i class="fa-solid fa-umbrella" style="color: DarkTurquoise"></i> 高 (>=70%)</td>
+                <td>每100次概率為「高」的預測中，實際上約有70次或以上平均累積雨量達到10毫米或以上。</td>
+            </tr>
+            <tr>
+                <td><i class="fa-solid fa-umbrella" style="color: rgba(0, 206, 209, 0.7)"></i> 中高 (55-69%)</td>
+                <td>每100次概率為「中高」的預測中，實際上約有55至69次平均累積雨量達到10毫米或以上。</td>
+            </tr>
+            <tr>
+                <td><i class="fa-solid fa-umbrella" style="color: SkyBlue"></i> 中 (45-54%)</td>
+                <td>每100次概率為「中」的預測中，實際上約有45至54次平均累積雨量達到10毫米或以上。</td>
+            </tr>
+            <tr>
+                <td><i class="fa-solid fa-umbrella" style="color: rgb(176, 196, 222)"></i> 中低 (30-44%)</td>
+                <td>每100次概率為「中低」的預測中，實際上約有30至44次平均累積雨量達到10毫米或以上。</td>
+            </tr>
+            <tr>
+                <td><i class="fa-solid fa-umbrella" style="color: rgba(176, 196, 222, 0.5)"></i> 低 (<30%)</td>
+                <td>每100次概率為「低」的預測中，實際上約有少於30次平均累積雨量達到10毫米或以上。</td>
+            </tr>
+          </table>
+          <p>顯著降雨概率第一至六天的誤差約在百分之十以內，第七至九天的誤差約在百分之二十以內。如欲了解更多關於顯著降雨概率的資訊，請按<a href="https://www.hko.gov.hk/tc/education/weather/rain/00568-Q-&-A-for-Probability-of-Significant-Rain.html">此</a>。</p>
+        </div>
+      </div>
+</body>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@300;400;500;700&display=swap');
+    body {
+        font-family: 'Noto Sans HK', sans-serif;
+        letter-spacing: 0.02rem;
+        display: grid;
+        margin: auto;
+        padding: 35px 15px;
+        row-gap: 20px;
+        column-gap: 20px;
+    }
+    table, td {
+        border: 1px gray solid;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+    .box {
+        background: rgba(245,245,245,1);
+        padding: 20px 25px 25px 25px;
+        border-radius: 15px;
+        
+    }
+    .boxTitle {
+        font-size: 12px;
+        padding-bottom: 5px;
+        color: rgb(100,100,100);
+        font-weight: 500;
+        letter-spacing: 0.1rem;
+    }
+    .boxFooter {
+        font-size: 11px;
+        padding-top: 10px;
+        color: darkgray;
+    }
+
+    #weatherForecastSummary {
+        padding-bottom: 10px;
+    }
+    .weatherForecast .boxContentWrap {
+        display: grid;
+        row-gap: 13px;
+    }
+    .weatherForecastDay {
+        display: grid;
+        grid-template-columns: 25% 14% 40% 8% 13%;
+        align-items: center;
+    }
+    .weatherForecastTemperatureBar {
+        display: grid;
+        grid-template-columns: 1fr 5fr 1fr;
+        align-items: center;
+        column-gap: 12px;
+        color: gray;
+        font-weight: 300;
+    }
+    .bar {
+        height: 5px;
+        background: rgb(220,220,220);
+    }
+    .barTempMin {
+        text-align: right;
+    }
+    .barTempMax {
+        text-align: left;
+    }
+    .weatherForecastPSR {
+        cursor: pointer;
+    }
+    .weatherForecastPSR span {
+        color: gray;
+        font-weight: 300;
+    }
+
+    @media only screen and (max-width: 880px) {
+        body {
+            max-width: 600px;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+        }   
+    }
+    @media only screen and (min-width: 881px) {
+        body {
+            max-width: 900px;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+        }
+        .generalSituation {
+            grid-column-start: 1;
+            grid-column-end: 2;
+            grid-row-start: 1;
+            grid-row-end: 2;
+        }
+        .weatherForecast {
+            grid-column-start: 2;
+            grid-column-end: 4;
+            grid-row-start: 1;
+            grid-row-end: 3;
+        }
+    }
+
+    /* [Object] Modal =============================== */
+    .modal {
+        opacity: 0;
+        visibility: hidden;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        text-align: left;
+        background: rgba(0,0,0,.4);
+    }
+
+    .modal__bg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    .modal-state {
+        display: none;
+    }
+
+    .modal-state:checked + .modal {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal-state:checked + .modal .modal__inner {
+        top: 0;
+    }
+
+    .modal__inner {
+        position: absolute;
+        top: 0%;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 60%;
+        margin: auto;
+        overflow: auto;
+        background: #fff;
+        border-radius: 5px;
+        padding: 1em 2em;
+        height: 55%;
+    }
+
+    .modal__close {
+        position: absolute;
+        right: 1em;
+        top: 1em;
+        width: 1.1em;
+        height: 1.1em;
+        cursor: pointer;
+    }
+
+    .modal__close:after,
+    .modal__close:before {
+        content: '';
+        position: absolute;
+        width: 2px;
+        height: 1.5em;
+        background: #ccc;
+        display: block;
+        transform: rotate(45deg);
+        left: 50%;
+        margin: -3px 0 0 -1px;
+        top: 0;
+    }
+
+    .modal__close:hover:after,
+    .modal__close:hover:before {
+        background: #aaa;
+    }
+
+    .modal__close:before {
+        transform: rotate(-45deg);
+    }
+
+    @media screen and (max-width: 768px) {
+        .modal__inner {
+            width: 90%;
+            height: 90%;
+            box-sizing: border-box;
+        }
+    }
+
+</style>
+<script src="wxreport.js"></script>
+<script src="https://kit.fontawesome.com/0a827a3361.js" crossorigin="anonymous"></script>
+</html>

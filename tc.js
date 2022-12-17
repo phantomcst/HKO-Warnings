@@ -38,7 +38,8 @@ async function load() {
         var announcement_index;
         if (movement_index == -1) {
             announcement_index = -1;
-        } else if (text[movement_index].includes("已增強為")) {
+        } else if (text[movement_index-1].includes("已增強為") || text[movement_index-1].includes("已減弱為")) {
+            movement_index -= 1;
             if (movement_index + 1 == text.length) announcement_index = -1;
             else announcement_index = movement_index + 2;
         } else {

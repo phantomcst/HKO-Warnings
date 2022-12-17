@@ -82,80 +82,104 @@ function count_warnings(obj) {
 }
 
 async function warnings() {
-    let url = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warningInfo&lang=tc';
-    //let url = 'test_data/test_data_tc.json';
-    let obj = await (await fetch(url)).json();
-    //console.log(obj);
+    let warningDetailsURL = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warningInfo&lang=tc';
+    let warningSummaryURL = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warnsum&lang=tc';
+    //let warningDetailsURL = 'test_data/test_data_tc.json';
+    let warningDetailsObject = await (await fetch(warningDetailsURL)).json();
+    let warningSummaryObject = await (await fetch(warningSummaryURL)).json();
 
-    //Warning count
-    var count = 0;
-    for (i = 0; i < obj["details"].length; i++) {
-        if (warning_valid(obj["details"][i])) count++;
+
+    // ---------- Warning Count ----------
+    var warningCount = 0;
+    for (var key in warningSummaryObject) {
+        if (warningSummaryObject.hasOwnProperty(key)) {
+            warningCount++;
+        }
     }
-    if (count == 0) document.getElementById("summary").innerHTML = `現時沒有生效警告`;
-    else document.getElementById("summary").innerHTML = `現時有 ${count} 個生效警告`;
+    if (warningCount == 0) document.getElementById("summary").innerHTML = `現時沒有生效警告`;
+    else document.getElementById("summary").innerHTML = `現時有 ${warningCount} 個生效警告`;
    
+
+    // ---------- Page Refresh Time ----------
     document.getElementById("refresh").innerHTML = `頁面最後更新：${format_time(new Date(), false)}`;
 
-    for (var i = 0; i < obj["details"].length; i++) {
-        const warn_source = obj["details"][i];
 
+    // ---------- Warning Details ----------
+    // create in force warnings array
+    const warningsArray = [];
+    for (var key in warningSummaryObject) {
+        if (warningSummaryObject.hasOwnProperty(key) && warningSummaryObject[key]["actionCode"] != "CANCEL") {
+            warningsArray.push(key);
+        }
+    }
+
+    for (var i = 0; i < warningCount; i++) {
+        // get warning details object
+        var loopWarningDetailsObj;
+        for (var j = 0; j < warningDetailsObject["details"].length; j++) {
+            if (warningDetailsObject["details"][j]["warningStatementCode"] == warningsArray[i]) {
+                loopWarningDetailsObj = warningDetailsObject["details"][j];
+            }
+        }
+
+        // create warning box
         const box = document.createElement("section");
         box.id = `warn-${i}`;
         box.classList.add("warn");
         document.getElementById("warn-wrap").appendChild(box);
 
-        //Icon image
+        // set icon image
         const icon = document.createElement("img");
-        if (warning_valid(warn_source)) {
-            if (warn_source["subtype"]) icon.src = `img/${warn_source["subtype"]}.jpeg`;
-            else icon.src = `img/${warn_source["warningStatementCode"]}.jpeg`;
-        }
+        if (loopWarningDetailsObj["subtype"]) icon.src = `img/${loopWarningDetailsObj["subtype"]}.jpeg`;
+        else icon.src = `img/${loopWarningDetailsObj["warningStatementCode"]}.jpeg`;
         document.getElementById(`warn-${i}`).appendChild(icon);
         icon.classList.add("warn-icon-img");
 
-        //Warning text box
+        // create warning text box
         const node = document.createElement("div");
         document.getElementById(`warn-${i}`).appendChild(node);
         node.id = i;
         node.classList.add("warn-text");
 
-        //Warning name
+        // set warning name
         const warn_name = document.createElement("span");
-        var warning_name = warning_type(warn_source["warningStatementCode"]);
-        if (warning_name == -1) warning_name = warning_subtype(warn_source["subtype"]);
+        var warning_name = warning_type(loopWarningDetailsObj["warningStatementCode"]);
+        if (warning_name == -1) warning_name = warning_subtype(loopWarningDetailsObj["subtype"]);
         warn_name.innerHTML = warning_name;
         warn_name.classList.add("block-title");
         node.appendChild(warn_name);
 
-        //Update
+        // set warning update time
         const update = document.createElement("p");
-        update.innerHTML = `${format_time(new Date(warn_source["updateTime"]), true)}更新`;
+        update.innerHTML = `${format_time(new Date(loopWarningDetailsObj["updateTime"]), true)}更新`;
         document.getElementById(i).appendChild(update);
         update.classList.add("warn-update-time");
 
-        //Content
+        // set warning content
         const warn_content_wrap = document.createElement("div");
         warn_content_wrap.classList.add("warn-content-wrap");
         node.appendChild(warn_content_wrap);
-        var collapsable_title = false;
-        const collapsable = document.createElement("details");
-        for (var k = 0; k < warn_source["contents"].length; k++) {
-            if (warn_source["contents"][k].includes("－防風措施報告：") && !collapsable_title) {
-                collapsable_title = true;
-                const summary = document.createElement("summary");
-                summary.innerHTML = warn_source["contents"][k];
-                collapsable.appendChild(summary);
-                warn_content_wrap.appendChild(collapsable);
-            } else if (collapsable_title) {
-                const para = document.createElement("p");
-                para.innerHTML = warn_source["contents"][k];
-                collapsable.appendChild(para);
-            } else {
-                const para = document.createElement("p");
-                para.innerHTML = warn_source["contents"][k];
-                warn_content_wrap.appendChild(para);
-            }
+        //var collapsable_title = false;
+        //const collapsable = document.createElement("details");
+        for (var k = 0; k < loopWarningDetailsObj["contents"].length; k++) {
+            // if (loopWarningDetailsObj["contents"][k].includes("－防風措施報告：") && !collapsable_title) {
+            //     collapsable_title = true;
+            //     const summary = document.createElement("summary");
+            //     summary.innerHTML = loopWarningDetailsObj["contents"][k];
+            //     collapsable.appendChild(summary);
+            //     warn_content_wrap.appendChild(collapsable);
+            // } else if (collapsable_title) {
+            //     const para = document.createElement("p");
+            //     para.innerHTML = loopWarningDetailsObj["contents"][k];
+            //     collapsable.appendChild(para);
+            // } else {
+            //     const para = document.createElement("p");
+            //     para.innerHTML = loopWarningDetailsObj["contents"][k];
+            //     warn_content_wrap.appendChild(para);
+            // }
+            const para = document.createElement("p");
+            para.innerHTML = loopWarningDetailsObj["contents"][k];
+            warn_content_wrap.appendChild(para);
         }
     }
 }
