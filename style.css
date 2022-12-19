@@ -64,6 +64,7 @@ body {
     border-radius: 10px;
     padding: 3px;
     border: darkgray solid 1.5px;
+    background: white;
 }
 
 .swt-update-time, .warn-update-time {
@@ -114,5 +115,5 @@ body.dark {
     color: lightgray;
 }
 .dark .warn-icon-img {
-    border: rgb(20,20,20) solid 1.5px !important;
+    border: rgb(80,80,80) solid 1.5px !important;
 }

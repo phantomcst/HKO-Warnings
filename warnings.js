@@ -64,22 +64,6 @@ function format_time(timestamp, addDate) {
 
     return result;
 }
-function warning_valid(obj) {
-    if (obj["warningStatementCode"] == "WTCPRE8") return false;
-    else if (obj["warningStatementCode"] == "WTCSGNL" && obj["subtype"] == "CANCEL") return false;
-    else return true;
-}
-function count_warnings(obj) {
-    var count = 0;
-    for (i = 0; i < obj.length; i++) {
-        var flag = false;
-        if (obj[i]["warningStatementCode"] == "WTCPRE8") flag = true;
-        else if (obj[i]["warningStatementCode"] == "WTCSGNL" && obj[i]["subtype"] == "CANCEL") flag = true;
-
-        if (!flag) count++;
-    }
-    return count;
-}
 
 async function warnings() {
     let warningDetailsURL = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warningInfo&lang=tc';
@@ -92,7 +76,7 @@ async function warnings() {
     // ---------- Warning Count ----------
     var warningCount = 0;
     for (var key in warningSummaryObject) {
-        if (warningSummaryObject.hasOwnProperty(key)) {
+        if (warningSummaryObject.hasOwnProperty(key) && warningSummaryObject[key]["actionCode"] != "CANCEL") {
             warningCount++;
         }
     }
