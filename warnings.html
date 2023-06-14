@@ -8,16 +8,40 @@
     <title>現時生效警告</title>
 </head>
 <body>
-    <div id="summary"></div>
-    <div id="refresh"></div>
+    <section class="head">
+        <div id="summary"></div>
+        <div class="toolbar">
+            <span id="refresh"></span>
+            <span class="toolbar-divider"></span>
+            <span onClick="window.location.reload();">{{ $t('toolbar.refresh') }}</span>
+            <span class="toolbar-divider"></span>
+            <span onClick="switchLang();">{{ $t('toolbar.language') }}</span>
+        </div>
+    </section>
 
-    <div id="swt-wrap">
-        <span class="block-title">特別天氣提示</span>
-        <ol id="swt-list">
-        </ol>
-    </div>
-
-    <div id="warn-wrap"></div>
+    <section class="content">
+        <div id="swt-wrap">
+            <span class="block-title">{{ $t('swt.title') }}</span>
+            <ol id="swt-list">
+            </ol>
+        </div>
+    
+        <div id="warn-wrap"></div>
+    </section>
 </body>
+<script>
+    function switchLang() {
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('lang', (lang == 'en') ? 'tc' : 'en');
+        window.location.search = urlParams;
+    }
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    var lang = !urlParams.get('lang') ? 'tc' : urlParams.get('lang'); //'tc' or 'en', 'tc' if null
+    console.log("lang: " + lang);
+</script>
+<script src="https://unpkg.com/vue@3.2.36/dist/vue.global.prod.js"></script>
+<script src="https://unpkg.com/vue-i18n@9.2.2/dist/vue-i18n.global.prod.js"></script>
+<script src="warnings_lang.js"></script>
 <script src="warnings.js"></script>
 </html>

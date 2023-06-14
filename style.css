@@ -2,69 +2,57 @@
 body {
     font-family: 'Noto Sans HK', sans-serif;
     font-weight: 400;
-    margin: 2rem 1rem;
+    letter-spacing: 0.5px;
+    padding: 2rem 1rem;
 }
-
 .block-title {
     font-weight: 600;
     font-size: 1.2rem;
 }
+p {
+    margin: 0;
+}
+
+.content {
+    margin: auto;
+    max-width: 1000px;
+}
 
 /* Special Weather Tips */
 #swt-wrap {
-    display: none;
-    padding: 25px 30px 50px 30px;
     background: rgba(248, 248, 174, 0.7);
     border-top: solid rgba(255, 192, 0, 1) 3px;
-    max-width: 1000px;
-    margin: auto auto 2rem auto;
+    display: none;
+    padding: 15px 15px 30px 20px;
+    margin-bottom: 2rem;
 }
 #swt-list {
-    font-weight: 400;
-    font-size: 1rem;
-    margin: 0.5rem 0 0 0;
     display: grid;
-    gap: 1.2rem;
-}
-#swt-wrap p {
-    margin: 0;
+    gap: 1rem;
 }
 #swt-wrap ol {
-    padding-left: 1rem;
+    padding-left: 1.1rem;
 }
 
 /* Warnings */
 #warn-wrap {
     display: grid;
     gap: 1.2rem;
-    justify-content: center;
 }
 .warn {
-    max-width: 1000px;
-    display: grid;
-    grid-template-columns: 1fr 6fr;
-}
-.warn-text {
-    padding: 25px 30px 50px 30px;
     background: rgba(255, 226, 226, 0.7);
     border-top: solid rgba(255, 26, 26, 1) 3px;
-}
-.warn-text p {
-    margin: 0;
-    font-weight: 400;
-    font-size: 1rem;
-    white-space: pre-wrap;
+    display: grid;
+    column-gap: 25px;
+    padding: 15px 15px 30px 15px;
 }
 .warn-content-wrap {
-    margin-top: 1rem;
+    padding-top: 1rem;
     display: grid;
-    gap: 0.3rem;
+    gap: 8px;
 }
 .warn-icon-img {
-    border-radius: 10px;
-    padding: 3px;
-    border: darkgray solid 1.5px;
-    background: white;
+    border-radius: 7px;
 }
 
 .swt-update-time, .warn-update-time {
@@ -74,15 +62,20 @@ body {
 }
 
 @media only screen and (max-width: 520px) {
+    .warn {
+        grid-template-columns: 1fr;
+    }
     .warn-icon-img {
         width: 65px;
-        margin-right: 15px;
+        padding-bottom: 7px;
     }
 }
 @media only screen and (min-width: 521px) {
+    .warn {
+        grid-template-columns: 100px 1fr;
+    }
     .warn-icon-img {
         width: 100px;
-        margin-right: 15px;
     }
 }
 
@@ -93,10 +86,17 @@ body {
     font-size: 1.5rem;
     padding-bottom: 6px;
 }
-#refresh {
+.toolbar {
     text-align: center;
     font-size: .8rem;
     padding-bottom: 20px;
+}
+.toolbar-divider {
+    padding: 0 10px;
+    user-select: none;
+}
+.toolbar-divider::before {
+    content: "|";
 }
 
 body.dark {
