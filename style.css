@@ -67,7 +67,7 @@ p {
     }
     .warn-icon-img {
         width: 65px;
-        padding-bottom: 7px;
+        margin-bottom: 7px;
     }
 }
 @media only screen and (min-width: 521px) {
@@ -97,6 +97,12 @@ p {
 }
 .toolbar-divider::before {
     content: "|";
+}
+.toolbar-button {
+    cursor: pointer;
+}
+.toolbar-button:hover {
+    text-decoration: underline;
 }
 
 body.dark {
