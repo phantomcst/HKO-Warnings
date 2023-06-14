@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <select name="dataType" id="dataType" onchange="getType()">
+        <option value="temperature">氣溫</option>
+        <option value="meanWind">風向風速</option>
+        <option value="maxGust">最高陣風</option>
+        <option value="pressure">海平面氣壓</option>
+        <option value="humidity">相對濕度</option>
+        <option value="visibility">能見度</option>
+    </select>
+
+    <table class="result" id="result"></table>
+</body>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        letter-spacing: 1px;
+        max-width: 800px;
+        margin: auto;
+        padding: 1rem;
+        text-align: justify;
+    }
+    td, th {
+        padding: 3px 15px 0 0;
+    }
+</style>
+<script src="wxobservations.js"></script>
+</html>
