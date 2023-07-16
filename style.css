@@ -107,7 +107,7 @@ body.dark {
     background: rgba(121, 121, 90, 0.7) !important;
     border-top: solid rgb(208, 174, 70) 3px !important;
 }
-.dark .warn-text {
+.dark .warn {
     background: rgba(120, 86, 86, 0.7);
     border-top: solid rgb(158, 22, 22) 3px;
 }
