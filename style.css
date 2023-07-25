@@ -4,6 +4,7 @@ body {
     font-weight: 400;
     letter-spacing: 0.5px;
     padding: 2rem 1rem;
+    white-space: pre-wrap;
 }
 .block-title {
     font-weight: 600;
@@ -13,6 +14,10 @@ p {
     margin: 0;
 }
 
+.head {
+    margin: auto;
+    max-width: 1200px;
+}
 .content {
     margin: auto;
     max-width: 1000px;

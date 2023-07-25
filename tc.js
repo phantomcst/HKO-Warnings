@@ -19,84 +19,76 @@ function find(whole, to_find) {
             return i;
         }
     }
-    return -1;
+    return -10;
+}
+function write(whole, type, start, end) {
+    if (start < 0 || end < 0) return;
+    const div = document.getElementById(type);
+    for (var i = start; i <= end; i++) {
+        var tag = document.createElement("p");
+        tag.appendChild(document.createTextNode(whole[i]));
+        div.appendChild(tag);
+    }
 }
 
 async function load() {
     let url = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warningInfo&lang=tc';
-    //let url = 'test_data/test_data_tc.json';
+    //let url = 'test_data/tc/tc01.json';
     let data = await (await fetch(url)).json();
     data = data["details"];
 
     var index = data.findIndex(obj => obj.warningStatementCode == "WTCSGNL");
     if (index != -1) {
         const text = data[index]["contents"];
+
+        // flags
+        var tc_detailed = true;
+        var tc_issue = false;
+        try {
+            if (text[0].includes("\n")) tc_issue = true;
+        } catch {}
         
-        var movement_index = find(text, ["集結在", "即在北緯", "東經", "預料向"]);
-        if (movement_index != -1 && text[movement_index-1].includes("已增強為")) movement_index--;
-        
-        var announcement_index;
-        if (movement_index == -1) {
-            announcement_index = -1;
-        } else if (text[movement_index-1].includes("已增強為") || text[movement_index-1].includes("已減弱為")) {
-            movement_index -= 1;
-            if (movement_index + 1 == text.length) announcement_index = -1;
-            else announcement_index = movement_index + 2;
-        } else {
-            if (movement_index == text.length) announcement_index = -1;
-            else announcement_index = movement_index + 1;
-        }
+        var tc_just_cancel = false;
+        try {
+            if (text[0].includes("取消")) tc_just_cancel = true;
+        } catch {}
 
-        var measure_index = text.indexOf(`${tc_warning_name(data[index]["subtype"])}－防風措施報告：`);
+        var tc_cancel = false;
+        try {
+            if (text[1].includes("取消")) tc_cancel = true;
+        } catch {}
 
-        //Name
-        const name_div = document.getElementById("name");
-        if (movement_index == -1) {
-            //Case 1
-            var tag = document.createElement("p");
-            tag.appendChild(document.createTextNode(text[0]));
-            name_div.appendChild(tag);
-        }
-        else {
-            for (var i = 0; i < movement_index; i++) {
-                var tag = document.createElement("p");
-                tag.appendChild(document.createTextNode(text[i]));
-                name_div.appendChild(tag);
-            }
-        }
+        // name
+        var name_start = 0;
 
-        //Movement
-        if (movement_index != -1) {
-            const movement_div = document.getElementById("movement");
-            for (var i = movement_index; i < announcement_index; i++) {
-                var tag = document.createElement("p");
-                tag.appendChild(document.createTextNode(text[i]));
-                movement_div.appendChild(tag);
-            }
-        }
+        var name_end;
+        if (tc_issue) name_end = 0;
+        else if (tc_just_cancel) name_end = 0;
+        else if (tc_cancel) name_end = 1;
+        else name_end = 2;
 
-        //Announcement
-        if (announcement_index != -1) {
-            const announcement_div = document.getElementById("announcement");
-            var stop;
-            if (measure_index == -1) stop = text.length;
-            else stop = measure_index;
-            for (var i = announcement_index; i < stop; i++) {
-                var tag = document.createElement("p");
-                tag.appendChild(document.createTextNode(text[i]));
-                announcement_div.appendChild(tag);
-            }
-        }
+        write(text, "name", name_start, name_end);
 
-        //Measure
-        if (measure_index != -1) {
-            const measure_div = document.getElementById("measure");
-            for (var i = measure_index; i < text.length; i++) {
-                var tag = document.createElement("p");
-                tag.appendChild(document.createTextNode(text[i]));
-                measure_div.appendChild(tag);
-            }
-        }
+        // movement
+        var movement_start;
+        if (tc_issue) movement_start = -10;
+        else if (tc_just_cancel) movement_start = 0;
+        else if (tc_cancel) movement_start = 2;
+        else movement_start = 3;
+
+        var movement_end = find(text, ["集結在", "即在北緯", "東經"]);
+
+        write(text, "movement", movement_start, movement_end);
+
+        // announcement
+        var announcement_start = movement_end + 1;
+        var announcement_end = (tc_cancel) ? text.length - 1 : find(text, ["－防風措施報告："]) - 1;
+        write(text, "announcement", announcement_start, announcement_end);
+
+        // measure
+        var measure_start = announcement_end + 1;
+        var measure_end = text.length - 1;
+        write(text, "measure", measure_start, measure_end);
     }
 }
 load();

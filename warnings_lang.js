@@ -11,6 +11,9 @@ const messages = {
         swt: {
             title: 'Special Weather Tips'
         },
+        pre8: {
+            title: 'Pre- No. 8 Special Announcement'
+        },
         warnings_name: {
             WFROST: 'Frost Warning',
             WHOT: 'Very Hot Weather Warning',
@@ -36,6 +39,11 @@ const messages = {
             WRAINR: 'Red Rainstorm Warning Signal',
             WRAINB: 'Black Rainstorm Warning Signal',
         },
+        title: {
+            comma: ', ',
+            and: ' and ',
+            in_force: 'There is no warning in force | \xa0is in force | \xa0are in force',
+        },
     },
     tc: {
         summary: {
@@ -47,6 +55,9 @@ const messages = {
         },
         swt: {
             title: '特別天氣提示'
+        },
+        pre8: {
+            title: '預警八號特別報告'
         },
         warnings_name: {
             WFROST: '霜凍警告',
@@ -72,6 +83,11 @@ const messages = {
             WRAINA: '黃色暴雨警告信號',
             WRAINR: '紅色暴雨警告信號',
             WRAINB: '黑色暴雨警告信號',
+        },
+        title: {
+            comma: '、',
+            and: '及',
+            in_force: '現時沒有生效警告 | 現正生效 | 現正生效',
         },
     }
 }
