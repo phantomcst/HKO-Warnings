@@ -42,6 +42,7 @@ function format_time(timestamp, addDate) {
     return result;
 }
 
+// Block 1: warnings
 async function warnings() {
     let warningDetailsURL = `https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warningInfo&lang=${lang}`;
     let warningSummaryURL = `https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warnsum&lang=${lang}`;
@@ -58,7 +59,6 @@ async function warnings() {
             warningCount++;
         }
     }
-    document.getElementById("summary").innerHTML = i18n.global.t('summary.warning_count', {count: warningCount});
 
 
     // ---------- Page Refresh Time ----------
@@ -73,6 +73,8 @@ async function warnings() {
             warningsArray.push(key);
         }
     }
+
+    var page_title_string = "";
 
     for (var i = 0; i < warningCount; i++) {
         // get warning details object
@@ -142,7 +144,15 @@ async function warnings() {
             para.innerHTML = loopWarningDetailsObj["contents"][k];
             warn_content_wrap.appendChild(para);
         }
+
+        // add to title string
+        console.log(`${i}: ${i18n.global.t(`warnings_name.${warning_code}`)}`);
+        page_title_string += i18n.global.t(`warnings_name.${warning_code}`);
+        if (i < warningCount - 2) page_title_string += i18n.global.t("title.comma");
+        else if (i == warningCount - 2) page_title_string += i18n.global.t("title.and");
     }
+    console.log(warningCount)
+    document.getElementById("summary").innerHTML = `${page_title_string}${i18n.global.t('title.in_force', {count: warningCount})}`;
 }
 try {
     warnings();
@@ -150,6 +160,7 @@ try {
     console.log("weather warnings error:" + err);
 }
 
+// Block 2: special weather tips
 async function swt() {
     let url = `https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=swt&lang=${lang}`;
     //let url = 'test_data/test_data_swt.json';
