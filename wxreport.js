@@ -93,8 +93,40 @@ async function load() {
     let url = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=flw&lang=tc';
     let data = await (await fetch(url)).json();
     
-    document.getElementById(`weatherForecastSummary`).innerHTML = data["outlook"];
-    document.getElementById(`generalSituation`).innerHTML = data["forecastDesc"];
-    document.getElementById(`generalSituationTitle`).innerHTML = data["forecastPeriod"];
+    if (data["generalSituation"] != "")
+        document.getElementById(`generalSituation`).innerHTML = data["generalSituation"];
+    else
+        document.getElementById(`generalSituationBox`).style.display = "none";
+    
+    if (data["tcInfo"] != "")
+        document.getElementById(`tcInfo`).innerHTML = data["tcInfo"];
+    else
+        document.getElementById(`tcInfoBox`).style.display = "none";
+
+    document.getElementById(`nineDayForecastSummary`).innerHTML = data["outlook"];
+    document.getElementById(`forecast`).innerHTML = data["forecastDesc"];
+    document.getElementById(`forecastTitle`).innerHTML = data["forecastPeriod"];
 }
 load();
+
+async function swt() {
+    let url = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=tc';
+    let data = await (await fetch(url)).json();
+    
+    var count = data["warningMessage"].length + data["specialWxTips"].length;
+    if (count == 0) {
+        document.getElementById(`alertBox`).style.display = "none";
+    }
+    else {
+        for (var i = 1; i <= count; i++) {
+            var message = "";
+            if (i <= data["warningMessage"].length) message = data["warningMessage"][i-1];
+            else message = data["specialWxTips"][i-1-data["warningMessage"].length];
+            
+            const messageElement = document.createElement("li");
+            document.getElementById("alertList").appendChild(messageElement);
+            messageElement.innerHTML = message;
+        }
+    }
+}
+swt();

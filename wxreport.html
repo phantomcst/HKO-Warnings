@@ -7,112 +7,127 @@
     <title>九天天氣預報</title>
 </head>
 <body>
-    <div class="box generalSituation">
-        <div class="boxTitle" id="generalSituationTitle">天氣展望</div>
+    <div class="box alert" id="alertBox">
+        <div class="boxTitle" id="alertTitle"></div>
+        <div id="alert">
+            <ol id="alertList">
+            </ol>
+        </div>
+    </div>
+    <div class="box generalSituation" id="generalSituationBox">
+        <div class="boxTitle" id="generalSituationTitle">天氣概況</div>
         <div id="generalSituation"></div>
     </div>
-    <div class="box weatherForecast">
+    <div class="box tcInfo" id="tcInfoBox">
+        <div class="boxTitle" id="tcInfoTitle">熱帶氣旋</div>
+        <div id="tcInfo"></div>
+    </div>
+    <div class="box forecast">
+        <div class="boxTitle" id="forecastTitle">天氣展望</div>
+        <div id="forecast"></div>
+    </div>
+    <div class="box nineDayForecast">
         <div class="boxTitle">九天天氣預報</div>
-        <div id="weatherForecastSummary"></div>
+        <div id="nineDayForecastSummary"></div>
         <div class="boxContentWrap">
-            <div class="weatherForecastDay">
-                <div class="weatherForecastDate" id="wx1-date">-</div>
-                <div class="weatherForecastIcon"><i id="wx1-icon" class="fa-solid fa-minus fa-lg"></i></div>
-                <div class="weatherForecastTemperatureBar">
+            <div class="nineDayForecastDay">
+                <div class="nineDayForecastDate" id="wx1-date">-</div>
+                <div class="nineDayForecastIcon"><i id="wx1-icon" class="fa-solid fa-minus fa-lg"></i></div>
+                <div class="nineDayForecastTemperatureBar">
                     <div class="barTemp barTempMin" id="wx1-tempMin">-°</div>
                     <div class="bar" id="wx1-tempBar"></div>
                     <div class="barTemp barTempMax" id="wx1-tempMax">-°</div>
                 </div>
                 <div></div>
-                <label class="weatherForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx1-psrIcon"></i> <span id="wx1-psr">-</span></label>
+                <label class="nineDayForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx1-psrIcon"></i> <span id="wx1-psr">-</span></label>
             </div>
-            <div class="weatherForecastDay">
-                <div class="weatherForecastDate" id="wx2-date">-</div>
-                <div class="weatherForecastIcon"><i id="wx2-icon" class="fa-solid fa-minus fa-lg"></i></div>
-                <div class="weatherForecastTemperatureBar">
+            <div class="nineDayForecastDay">
+                <div class="nineDayForecastDate" id="wx2-date">-</div>
+                <div class="nineDayForecastIcon"><i id="wx2-icon" class="fa-solid fa-minus fa-lg"></i></div>
+                <div class="nineDayForecastTemperatureBar">
                     <div class="barTemp barTempMin" id="wx2-tempMin">-°</div>
                     <div class="bar" id="wx2-tempBar"></div>
                     <div class="barTemp barTempMax" id="wx2-tempMax">-°</div>
                 </div>
                 <div></div>
-                <label class="weatherForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx2-psrIcon"></i> <span id="wx2-psr">-</span></label>
+                <label class="nineDayForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx2-psrIcon"></i> <span id="wx2-psr">-</span></label>
             </div>
-            <div class="weatherForecastDay">
-                <div class="weatherForecastDate" id="wx3-date">-</div>
-                <div class="weatherForecastIcon"><i id="wx3-icon" class="fa-solid fa-minus fa-lg"></i></div>
-                <div class="weatherForecastTemperatureBar">
+            <div class="nineDayForecastDay">
+                <div class="nineDayForecastDate" id="wx3-date">-</div>
+                <div class="nineDayForecastIcon"><i id="wx3-icon" class="fa-solid fa-minus fa-lg"></i></div>
+                <div class="nineDayForecastTemperatureBar">
                     <div class="barTemp barTempMin" id="wx3-tempMin">-°</div>
                     <div class="bar" id="wx3-tempBar"></div>
                     <div class="barTemp barTempMax" id="wx3-tempMax">-°</div>
                 </div>
                 <div></div>
-                <label class="weatherForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx3-psrIcon"></i> <span id="wx3-psr">-</span></label>
+                <label class="nineDayForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx3-psrIcon"></i> <span id="wx3-psr">-</span></label>
             </div>
-            <div class="weatherForecastDay">
-                <div class="weatherForecastDate" id="wx4-date">-</div>
-                <div class="weatherForecastIcon"><i id="wx4-icon" class="fa-solid fa-minus fa-lg"></i></div>
-                <div class="weatherForecastTemperatureBar">
+            <div class="nineDayForecastDay">
+                <div class="nineDayForecastDate" id="wx4-date">-</div>
+                <div class="nineDayForecastIcon"><i id="wx4-icon" class="fa-solid fa-minus fa-lg"></i></div>
+                <div class="nineDayForecastTemperatureBar">
                     <div class="barTemp barTempMin" id="wx4-tempMin">-°</div>
                     <div class="bar" id="wx4-tempBar"></div>
                     <div class="barTemp barTempMax" id="wx4-tempMax">-°</div>
                 </div>
                 <div></div>
-                <label class="weatherForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx4-psrIcon"></i> <span id="wx4-psr">-</span></label>
+                <label class="nineDayForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx4-psrIcon"></i> <span id="wx4-psr">-</span></label>
             </div>
-            <div class="weatherForecastDay">
-                <div class="weatherForecastDate" id="wx5-date">-</div>
-                <div class="weatherForecastIcon"><i id="wx5-icon" class="fa-solid fa-minus fa-lg"></i></div>
-                <div class="weatherForecastTemperatureBar">
+            <div class="nineDayForecastDay">
+                <div class="nineDayForecastDate" id="wx5-date">-</div>
+                <div class="nineDayForecastIcon"><i id="wx5-icon" class="fa-solid fa-minus fa-lg"></i></div>
+                <div class="nineDayForecastTemperatureBar">
                     <div class="barTemp barTempMin" id="wx5-tempMin">-°</div>
                     <div class="bar" id="wx5-tempBar"></div>
                     <div class="barTemp barTempMax" id="wx5-tempMax">-°</div>
                 </div>
                 <div></div>
-                <label class="weatherForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx5-psrIcon"></i> <span id="wx5-psr">-</span></label>
+                <label class="nineDayForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx5-psrIcon"></i> <span id="wx5-psr">-</span></label>
             </div>
-            <div class="weatherForecastDay">
-                <div class="weatherForecastDate" id="wx6-date">-</div>
-                <div class="weatherForecastIcon"><i id="wx6-icon" class="fa-solid fa-minus fa-lg"></i></div>
-                <div class="weatherForecastTemperatureBar">
+            <div class="nineDayForecastDay">
+                <div class="nineDayForecastDate" id="wx6-date">-</div>
+                <div class="nineDayForecastIcon"><i id="wx6-icon" class="fa-solid fa-minus fa-lg"></i></div>
+                <div class="nineDayForecastTemperatureBar">
                     <div class="barTemp barTempMin" id="wx6-tempMin">-°</div>
                     <div class="bar" id="wx6-tempBar"></div>
                     <div class="barTemp barTempMax" id="wx6-tempMax">-°</div>
                 </div>
                 <div></div>
-                <label class="weatherForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx6-psrIcon"></i> <span id="wx6-psr">-</span></label>
+                <label class="nineDayForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx6-psrIcon"></i> <span id="wx6-psr">-</span></label>
             </div>
-            <div class="weatherForecastDay">
-                <div class="weatherForecastDate" id="wx7-date">-</div>
-                <div class="weatherForecastIcon"><i id="wx7-icon" class="fa-solid fa-minus fa-lg"></i></div>
-                <div class="weatherForecastTemperatureBar">
+            <div class="nineDayForecastDay">
+                <div class="nineDayForecastDate" id="wx7-date">-</div>
+                <div class="nineDayForecastIcon"><i id="wx7-icon" class="fa-solid fa-minus fa-lg"></i></div>
+                <div class="nineDayForecastTemperatureBar">
                     <div class="barTemp barTempMin" id="wx7-tempMin">-°</div>
                     <div class="bar" id="wx7-tempBar"></div>
                     <div class="barTemp barTempMax" id="wx7-tempMax">-°</div>
                 </div>
                 <div></div>
-                <label class="weatherForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx7-psrIcon"></i> <span id="wx7-psr">-</span></label>
+                <label class="nineDayForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx7-psrIcon"></i> <span id="wx7-psr">-</span></label>
             </div>
-            <div class="weatherForecastDay">
-                <div class="weatherForecastDate" id="wx8-date">-</div>
-                <div class="weatherForecastIcon"><i id="wx8-icon" class="fa-solid fa-minus fa-lg"></i></div>
-                <div class="weatherForecastTemperatureBar">
+            <div class="nineDayForecastDay">
+                <div class="nineDayForecastDate" id="wx8-date">-</div>
+                <div class="nineDayForecastIcon"><i id="wx8-icon" class="fa-solid fa-minus fa-lg"></i></div>
+                <div class="nineDayForecastTemperatureBar">
                     <div class="barTemp barTempMin" id="wx8-tempMin">-°</div>
                     <div class="bar" id="wx8-tempBar"></div>
                     <div class="barTemp barTempMax" id="wx8-tempMax">-°</div>
                 </div>
                 <div></div>
-                <label class="weatherForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx8-psrIcon"></i> <span id="wx8-psr">-</span></label>
+                <label class="nineDayForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx8-psrIcon"></i> <span id="wx8-psr">-</span></label>
             </div>
-            <div class="weatherForecastDay">
-                <div class="weatherForecastDate" id="wx9-date">-</div>
-                <div class="weatherForecastIcon"><i id="wx9-icon" class="fa-solid fa-minus fa-lg"></i></div>
-                <div class="weatherForecastTemperatureBar">
+            <div class="nineDayForecastDay">
+                <div class="nineDayForecastDate" id="wx9-date">-</div>
+                <div class="nineDayForecastIcon"><i id="wx9-icon" class="fa-solid fa-minus fa-lg"></i></div>
+                <div class="nineDayForecastTemperatureBar">
                     <div class="barTemp barTempMin" id="wx9-tempMin">-°</div>
                     <div class="bar" id="wx9-tempBar"></div>
                     <div class="barTemp barTempMax" id="wx9-tempMax">-°</div>
                 </div>
                 <div></div>
-                <label class="weatherForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx9-psrIcon"></i> <span id="wx9-psr">-</span></label>
+                <label class="nineDayForecastPSR" class="btn" for="modal-1"><i class="fa-solid fa-umbrella" id="wx9-psrIcon"></i> <span id="wx9-psr">-</span></label>
             </div>
         </div>
     </div>
@@ -169,8 +184,7 @@
     .box {
         background: rgba(245,245,245,1);
         padding: 20px 25px 25px 25px;
-        border-radius: 15px;
-        
+        border-radius: 5px;
     }
     .boxTitle {
         font-size: 12px;
@@ -185,19 +199,32 @@
         color: darkgray;
     }
 
-    #weatherForecastSummary {
+    .alert {
+        background: rgb(255, 205, 205);
+    }
+    #alertList {
+        margin: 0;
+        display: grid;
+        gap: 1rem;
+    }
+
+    #tcInfo {
+        white-space: pre-line;
+    }
+
+    #nineDayForecastSummary {
         padding-bottom: 10px;
     }
-    .weatherForecast .boxContentWrap {
+    .nineDayForecast .boxContentWrap {
         display: grid;
         row-gap: 13px;
     }
-    .weatherForecastDay {
+    .nineDayForecastDay {
         display: grid;
         grid-template-columns: 25% 14% 40% 8% 13%;
         align-items: center;
     }
-    .weatherForecastTemperatureBar {
+    .nineDayForecastTemperatureBar {
         display: grid;
         grid-template-columns: 1fr 5fr 1fr;
         align-items: center;
@@ -215,10 +242,10 @@
     .barTempMax {
         text-align: left;
     }
-    .weatherForecastPSR {
+    .nineDayForecastPSR {
         cursor: pointer;
     }
-    .weatherForecastPSR span {
+    .nineDayForecastPSR span {
         color: gray;
         font-weight: 300;
     }
@@ -234,19 +261,37 @@
         body {
             max-width: 900px;
             grid-template-columns: 1fr 1fr 1fr;
-            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-rows: auto;
+        }
+        .alert {
+            grid-column-start: 1;
+            grid-column-end: 4;
+            grid-row-start: 1;
+            grid-row-end: 1;
         }
         .generalSituation {
             grid-column-start: 1;
-            grid-column-end: 2;
-            grid-row-start: 1;
+            grid-column-end: 4;
+            grid-row-start: 2;
             grid-row-end: 2;
         }
-        .weatherForecast {
+        .tcInfo {
+            grid-column-start: 1;
+            grid-column-end: 4;
+            grid-row-start: 3;
+            grid-row-end: 3;
+        }
+        .forecast {
+            grid-column-start: 1;
+            grid-column-end: 2;
+            grid-row-start: 4;
+            grid-row-end: 6;
+        }
+        .nineDayForecast {
             grid-column-start: 2;
             grid-column-end: 4;
-            grid-row-start: 1;
-            grid-row-end: 3;
+            grid-row-start: 4;
+            grid-row-end: 6;
         }
     }
 
