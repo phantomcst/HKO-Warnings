@@ -39,6 +39,18 @@ p {
     padding-left: 1.1rem;
 }
 
+/* Pre8 */
+#pre8-wrap {
+    background: rgba(255, 226, 226, 0.7);
+    border-top: solid rgba(255, 26, 26, 1) 3px;
+    display: none;
+    padding: 15px 15px 30px 20px;
+    margin-bottom: 2rem;
+}
+#pre8-time {
+    padding-bottom: 1rem;
+}
+
 /* Warnings */
 #warn-wrap {
     display: grid;
@@ -111,6 +123,10 @@ body.dark {
 .dark #swt-wrap {
     background: rgba(121, 121, 90, 0.7) !important;
     border-top: solid rgb(208, 174, 70) 3px !important;
+}
+.dark #pre8-wrap {
+    background: rgba(120, 86, 86, 0.7);
+    border-top: solid rgb(158, 22, 22) 3px;
 }
 .dark .warn {
     background: rgba(120, 86, 86, 0.7);

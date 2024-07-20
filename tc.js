@@ -32,8 +32,8 @@ function write(whole, type, start, end) {
 }
 
 async function load() {
-    let url = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warningInfo&lang=tc';
-    //let url = 'test_data/tc/tc01.json';
+    //let url = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warningInfo&lang=tc';
+    let url = 'test_data/tc/tc08.json';
     let data = await (await fetch(url)).json();
     data = data["details"];
 
@@ -82,7 +82,7 @@ async function load() {
 
         // announcement
         var announcement_start = movement_end + 1;
-        var announcement_end = (tc_cancel) ? text.length - 1 : find(text, ["－防風措施報告："]) - 1;
+        var announcement_end = (tc_cancel) ? text.length - 1 : find(text, ["防風措施報告："]) - 1;
         write(text, "announcement", announcement_start, announcement_end);
 
         // measure

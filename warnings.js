@@ -167,22 +167,31 @@ async function swt() {
     let obj = await (await fetch(url)).json();
     //console.log(obj);
 
-    if (obj["swt"].length != 0) {
+    var swtCount = obj["swt"].length;
+    var swtPre8Flag = false;
+    for (var i = 0; i < swtCount; i++) {
+        if (obj["swt"][i]["desc"].includes("香港天文台宣布") && obj["swt"][i]["desc"].includes("發出八號熱帶氣旋警告信號")) swtPre8Flag = true;
+    }
+    if (swtPre8Flag) swtCount--;
+
+    if (swtCount != 0) {
         document.getElementById("swt-wrap").style.display = "block";
         for (var i = 0; i < obj["swt"].length; i++) {
             const swt_source = obj["swt"][i];
-    
-            const tips_wrap = document.createElement("p");
-            document.getElementById("swt-list").appendChild(tips_wrap);
 
-            const update = document.createElement("p");
-            update.innerHTML = `${format_time(new Date(swt_source["updateTime"]), true)}`;
-            tips_wrap.appendChild(update);
-            update.classList.add("swt-update-time");
+            if (!obj["swt"][i]["desc"].includes("香港天文台宣布") && !obj["swt"][i]["desc"].includes("發出八號熱帶氣旋警告信號")) {    
+                const tips_wrap = document.createElement("p");
+                document.getElementById("swt-list").appendChild(tips_wrap);
 
-            const tips_text = document.createElement("li");
-            tips_text.innerHTML = `${swt_source['desc']}`;
-            tips_wrap.appendChild(tips_text);
+                const update = document.createElement("p");
+                update.innerHTML = `${format_time(new Date(swt_source["updateTime"]), true)}`;
+                tips_wrap.appendChild(update);
+                update.classList.add("swt-update-time");
+
+                const tips_text = document.createElement("li");
+                tips_text.innerHTML = `${swt_source['desc']}`;
+                tips_wrap.appendChild(tips_text);
+            }
         }
     }
 }
@@ -192,7 +201,25 @@ try {
     console.log("swt error:" + err);
 }
 
-//Dark Mode
+// Block 3: pre8
+async function pre8() {
+    let warningDetailsURL = `https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warningInfo&lang=${lang}`;
+    let warningDetailsObject = await (await fetch(warningDetailsURL)).json();
+    for (var key in warningDetailsObject["details"]) {
+        if (warningDetailsObject["details"][key]["warningStatementCode"] == "WTCPRE8") {
+            document.getElementById(`pre8-content`).innerHTML = warningDetailsObject["details"][key]["contents"];
+            document.getElementById(`pre8-time`).innerHTML = format_time(new Date(warningDetailsObject["details"][key]["updateTime"]), true);
+            document.getElementById("pre8-wrap").style.display = "grid";
+        }
+    }
+}
+try {
+    pre8();
+} catch(err) {
+    console.log("pre8 error:" + err);
+}
+
+// Block 4: dark mode
 //initial
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
     document.body.classList.add("dark");
