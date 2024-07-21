@@ -113,21 +113,19 @@ async function swt() {
     let url = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=tc';
     let data = await (await fetch(url)).json();
     
+    var warningMessageCount = 0;
     try {
-        var warningMessageCount = data["warningMessage"].length;
-    } catch {
-        var warningMessageCount = 0;
-    }
+        warningMessageCount = data["warningMessage"].length;
+    } catch {}
+    var specialWxTipsCount = 0;
     try {
-        var specialWxTipsCount = data["specialWxTips"].length;
-    } catch {
-        var specialWxTipsCount = 0;
-    }
+        specialWxTipsCount = data["specialWxTips"].length;
+    } catch {}
+    var tcmessageCount = 0;
     try {
-        var tcmessageCount = data["tcmessage"].length;
-    } catch {
-        var tcmessageCount = 0;
-    }
+        tcmessageCount = data["tcmessage"].length;
+    } catch {}
+
     var totalCount = warningMessageCount + specialWxTipsCount + tcmessageCount;
 
     if (totalCount == 0) {
@@ -137,9 +135,9 @@ async function swt() {
         for (var i = 1; i <= totalCount; i++) {
             var message = "";
             if (i <= warningMessageCount) message = data["warningMessage"][i-1];
-            else if (i <= specialWxTipsCount) message = data["specialWxTips"][i-1-warningMessageCount];
+            else if (i <= warningMessageCount + specialWxTipsCount) message = data["specialWxTips"][i-1-warningMessageCount];
             else message = data["tcmessage"][i-1-warningMessageCount-specialWxTipsCount];
-            
+        
             const messageElement = document.createElement("li");
             document.getElementById("alertList").appendChild(messageElement);
             messageElement.innerHTML = message;
