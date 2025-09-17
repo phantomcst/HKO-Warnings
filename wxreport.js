@@ -85,6 +85,12 @@ async function nineDayForecast() {
         else if (forecastArray[i]["PSR"] == "中低") psrIconColour = "rgb(176, 196, 222)";
         else if (forecastArray[i]["PSR"] == "低") psrIconColour = "rgba(176, 196, 222, 0.5)";
         document.getElementById(`wx${i+1}-psrIcon`).style.color = psrIconColour;
+
+        //desc
+        document.getElementById(`wx${i+1}-desc`).innerHTML = `${forecastArray[i]["forecastWeather"]}`;
+
+        //wind
+        document.getElementById(`wx${i+1}-wind`).innerHTML = `${forecastArray[i]["forecastWind"]}`;
     }
 }
 nineDayForecast();
@@ -103,8 +109,8 @@ async function load() {
     else
         document.getElementById(`tcInfoBox`).style.display = "none";
 
-    document.getElementById(`nineDayForecastSummary`).innerHTML = data["outlook"];
-    document.getElementById(`forecast`).innerHTML = data["forecastDesc"];
+    var forecastAndOutlook = `${data["forecastDesc"]}\n\n展望：${data["outlook"]}`;
+    document.getElementById(`forecast`).innerHTML = forecastAndOutlook;
     document.getElementById(`forecastTitle`).innerHTML = data["forecastPeriod"];
 }
 load();

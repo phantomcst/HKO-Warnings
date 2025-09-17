@@ -21,6 +21,7 @@ function find(whole, to_find) {
     }
     return -10;
 }
+var trackEachTextAppear = "";
 function write(whole, type, start, end) {
     if (start < 0 || end < 0) return;
     const div = document.getElementById(type);
@@ -28,67 +29,87 @@ function write(whole, type, start, end) {
         var tag = document.createElement("p");
         tag.appendChild(document.createTextNode(whole[i]));
         div.appendChild(tag);
+        trackEachTextAppear = trackEachTextAppear + ".";
     }
 }
 
 async function load() {
     let url = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warningInfo&lang=tc';
-    //let url = 'test_data/tc/tc01.json';
+    //let url = 'test_data/tc/tc09.json';
     let data = await (await fetch(url)).json();
     data = data["details"];
 
     var index = data.findIndex(obj => obj.warningStatementCode == "WTCSGNL");
     if (index != -1) {
         const text = data[index]["contents"];
+        const textLength = Object.keys(text).length;
 
-        // flags
-        var tc_detailed = true;
-        var tc_issue = false;
         try {
-            if (text[0].includes("\n")) tc_issue = true;
-        } catch {}
-        
-        var tc_just_cancel = false;
-        try {
-            if (text[0].includes("取消")) tc_just_cancel = true;
-        } catch {}
+            // flags
+            var tc_detailed = true;
+            var tc_issue = false;
+            try {
+                if (text[0].includes("\n")) tc_issue = true;
+            } catch {}
+            
+            var tc_just_cancel = false;
+            try {
+                if (text[0].includes("取消")) tc_just_cancel = true;
+            } catch {}
 
-        var tc_cancel = false;
-        try {
-            if (text[1].includes("取消")) tc_cancel = true;
-        } catch {}
+            var tc_cancel = false;
+            try {
+                if (text[1].includes("取消")) tc_cancel = true;
+            } catch {}
 
-        // name
-        var name_start = 0;
+            // movement
+            var movement_start = find(text, ["集結在", "即在北緯", "東經"]);
+            var movement_end = movement_start;
 
-        var name_end;
-        if (tc_issue) name_end = 0;
-        else if (tc_just_cancel) name_end = 0;
-        else if (tc_cancel) name_end = 1;
-        else name_end = 2;
+            if (movement_start - 1 >= 0) {
+                if (text[movement_start-1].search("增強") != -1 || text[movement_start-1].search("減弱") != -1) movement_start--; // have 增強 or 減弱
+            }
 
-        write(text, "name", name_start, name_end);
+            if (tc_issue) {
+                movement_start = -10;
+                movement_end = -10;
+            }
 
-        // movement
-        var movement_start;
-        if (tc_issue) movement_start = -10;
-        else if (tc_just_cancel) movement_start = 0;
-        else if (tc_cancel) movement_start = 2;
-        else movement_start = 3;
+            write(text, "movement", movement_start, movement_end);
 
-        var movement_end = find(text, ["集結在", "即在北緯", "東經"]);
+            // name
+            var name_start = 0;
+            var name_end = movement_start - 1;
 
-        write(text, "movement", movement_start, movement_end);
+            if (tc_issue || tc_just_cancel) name_end = 0;
 
-        // announcement
-        var announcement_start = movement_end + 1;
-        var announcement_end = (tc_cancel) ? text.length - 1 : find(text, ["－防風措施報告："]) - 1;
-        write(text, "announcement", announcement_start, announcement_end);
+            write(text, "name", name_start, name_end);
 
-        // measure
-        var measure_start = announcement_end + 1;
-        var measure_end = text.length - 1;
-        write(text, "measure", measure_start, measure_end);
+            // announcement
+            var announcement_start = movement_end + 1;
+            var announcement_end = (tc_cancel) ? text.length - 1 : find(text, ["防風措施報告"]) - 1;
+            write(text, "announcement", announcement_start, announcement_end);
+
+            // measure
+            var measure_start = announcement_end + 1;
+            var measure_end = text.length - 1;
+            write(text, "measure", measure_start, measure_end);
+
+            // check if all texts are present, if not go fallback
+            if (trackEachTextAppear.length != textLength) {
+                write(text, "fallback", 0, textLength-1);
+                document.getElementById("name").style.display = "none";
+                document.getElementById("movement").style.display = "none";
+                document.getElementById("announcement").style.display = "none";
+                document.getElementById("measure").style.display = "none";
+                document.getElementById("movementHeader").style.display = "none";
+                document.getElementById("announcementHeader").style.display = "none";
+                document.getElementById("measureHeader").style.display = "none";
+            }
+        }
+        catch {
+            write(text, "fallback", 0, textLength-1);
+        }
     }
 }
 load();
